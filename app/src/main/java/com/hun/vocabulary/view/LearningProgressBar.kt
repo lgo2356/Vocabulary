@@ -10,15 +10,12 @@ import android.view.animation.DecelerateInterpolator
 class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     companion object {
-        private const val MAX_PROGRESS = 100
-        private const val MAX_SWEEP_ANGLE = 360
+        private const val MAX_PROGRESS = 100f
+        private const val MAX_SWEEP_ANGLE = 360f
         private const val ANIMATION_DURATION = 400L
     }
 
-    private var mRect: Rect = Rect()
-    private var mPaint: Paint = Paint()
-    private var mWidth: Int = 0
-    private var mHeight: Int = 0
+    private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var mStartAngle = -90f
     private var mSweepAngle = 0f
     private var mProgressColor = Color.BLACK
@@ -53,7 +50,8 @@ class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context,
             textSize = Math.min(width, height) / 5f
             textAlign = Paint.Align.CENTER
             strokeWidth = 0f
-            color = Color.BLACK
+            color = mTextColor
+            style = Paint.Style.FILL
         }
 
         val xPos: Float = canvas.width / 2f
@@ -63,7 +61,7 @@ class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context,
     }
 
     private fun calcSweepAngleFromProgress(progress: Int): Float {
-        return ((MAX_SWEEP_ANGLE / MAX_PROGRESS) * progress).toFloat()
+        return (MAX_SWEEP_ANGLE / MAX_PROGRESS) * progress
     }
 
     private fun calcProgressFromSweepAngle(sweepAngle: Float): Int {
