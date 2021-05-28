@@ -22,8 +22,12 @@
 
     <com.hun.vocabulary.view.LearningProgressBar
         android:id="@+id/progress_learning_rate"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progressBarColor="@color/teal_200"
+        app:progressTextColor="@color/teal_200" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

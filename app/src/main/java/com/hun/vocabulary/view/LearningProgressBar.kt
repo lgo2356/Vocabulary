@@ -2,12 +2,31 @@ package com.hun.vocabulary.view
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import com.hun.vocabulary.R
 
-class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class LearningProgressBar @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyle: Int) : View(context, attrs, defStyle) {
+
+    init {
+        setAttrs(attrs)
+//        attrs.run {
+//            context.obtainStyledAttributes(this, R.styleable.LearningProgressBar)
+//        }.run {
+//            val progressBarColorId =
+//                getResourceId(R.styleable.LearningProgressBar_progressBarColor, R.color.teal_200)
+//            val progressTextColorId =
+//                getResourceId(R.styleable.LearningProgressBar_progressTextColor, R.color.teal_200)
+//
+//            mProgressColor = progressBarColorId
+//            mTextColor = progressTextColorId
+//
+//            recycle()
+//        }
+    }
 
     companion object {
         private const val MAX_PROGRESS = 100f
@@ -18,15 +37,37 @@ class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context,
     private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var mStartAngle = -90f
     private var mSweepAngle = 0f
-    private var mProgressColor = Color.BLACK
     private var mStrokeWidth = 20
+    private var mProgressColor = Color.BLACK
     private var mTextColor = Color.BLACK
 
     override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
         drawOutlineArc(canvas)
         drawText(canvas)
+    }
 
-        super.onDraw(canvas)
+    private fun setAttrs(attrs: AttributeSet) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LearningProgressBar)
+        setTypeArray(typedArray)
+    }
+
+    private fun setTypeArray(typedArray: TypedArray) {
+        val progressBarColorID =
+            typedArray.getResourceId(
+                R.styleable.LearningProgressBar_progressBarColor,
+                R.color.teal_200
+            )
+        val progressTextColorID =
+            typedArray.getResourceId(
+                R.styleable.LearningProgressBar_progressTextColor,
+                R.color.black
+            )
+
+        mProgressColor = progressBarColorID
+        mTextColor = progressTextColorID
+
+        typedArray.recycle()
     }
 
     private fun drawOutlineArc(canvas: Canvas) {
@@ -35,7 +76,7 @@ class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context,
         val outerOval = RectF(strokeWidth, strokeWidth, diameter, diameter)
 
         mPaint.apply {
-            color = Color.BLACK
+            color = mProgressColor
             setStrokeWidth(strokeWidth)
             isAntiAlias = true
             strokeCap = Paint.Cap.ROUND
@@ -69,14 +110,15 @@ class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context,
     }
 
     fun setProgress(progress: Int) {
-        val animator = ValueAnimator.ofFloat(mSweepAngle, calcSweepAngleFromProgress(progress)).apply {
-            interpolator = DecelerateInterpolator()
-            duration = ANIMATION_DURATION
-            addUpdateListener {
-                mSweepAngle = it.animatedValue as Float
-                invalidate()
+        val animator =
+            ValueAnimator.ofFloat(mSweepAngle, calcSweepAngleFromProgress(progress)).apply {
+                interpolator = DecelerateInterpolator()
+                duration = ANIMATION_DURATION
+                addUpdateListener {
+                    mSweepAngle = it.animatedValue as Float
+                    invalidate()
+                }
             }
-        }
         animator.start()
     }
 
