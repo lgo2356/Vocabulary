@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.progressLearningRate.apply {
             setProgress(50)
-            setProgressColor(Color.BLUE)
+//            setProgressColor(Color.BLUE)
         }
     }
 }
