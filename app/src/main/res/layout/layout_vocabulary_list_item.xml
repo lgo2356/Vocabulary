@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
 
     <TextView
         android:id="@+id/tv_title"
@@ -10,7 +14,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/tv_memo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="메모장 타이틀" />
 
     <TextView
         android:id="@+id/tv_memo"
@@ -18,7 +23,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        tools:text="메모장 설명" />
 
     <com.hun.vocabulary.view.LearningProgressBar
         android:id="@+id/progress_learning_rate"
@@ -27,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:progressBarColor="@color/teal_200"
-        app:progressTextColor="@color/teal_200" />
+        custom:progressBarColor="@color/teal_200"
+        custom:progressTextColor="@color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
