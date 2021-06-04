@@ -7,26 +7,10 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import androidx.core.content.ContextCompat
 import com.hun.vocabulary.R
 
-class LearningProgressBar @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyle: Int) : View(context, attrs, defStyle) {
-
-    init {
-        setAttrs(attrs)
-//        attrs.run {
-//            context.obtainStyledAttributes(this, R.styleable.LearningProgressBar)
-//        }.run {
-//            val progressBarColorId =
-//                getResourceId(R.styleable.LearningProgressBar_progressBarColor, R.color.teal_200)
-//            val progressTextColorId =
-//                getResourceId(R.styleable.LearningProgressBar_progressTextColor, R.color.teal_200)
-//
-//            mProgressColor = progressBarColorId
-//            mTextColor = progressTextColorId
-//
-//            recycle()
-//        }
-    }
+class LearningProgressBar(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     companion object {
         private const val MAX_PROGRESS = 100f
@@ -38,8 +22,25 @@ class LearningProgressBar @JvmOverloads constructor(context: Context, attrs: Att
     private var mStartAngle = -90f
     private var mSweepAngle = 0f
     private var mStrokeWidth = 20
-    private var mProgressColor = Color.BLACK
-    private var mTextColor = Color.BLACK
+    private var mProgressColor = 0
+    private var mTextColor = 0
+
+    init {
+        context.theme.obtainStyledAttributes(attrs, R.styleable.LearningProgressBar, 0, 0).apply {
+            try {
+                mProgressColor = getColor(
+                    R.styleable.LearningProgressBar_progressBarColor,
+                    ContextCompat.getColor(context, R.color.teal_200)
+                )
+                mTextColor = getColor(
+                    R.styleable.LearningProgressBar_progressTextColor,
+                    ContextCompat.getColor(context, R.color.teal_200)
+                )
+            } finally {
+                recycle()
+            }
+        }
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -47,32 +48,9 @@ class LearningProgressBar @JvmOverloads constructor(context: Context, attrs: Att
         drawText(canvas)
     }
 
-    private fun setAttrs(attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LearningProgressBar)
-        setTypeArray(typedArray)
-    }
-
-    private fun setTypeArray(typedArray: TypedArray) {
-        val progressBarColorID =
-            typedArray.getResourceId(
-                R.styleable.LearningProgressBar_progressBarColor,
-                R.color.teal_200
-            )
-        val progressTextColorID =
-            typedArray.getResourceId(
-                R.styleable.LearningProgressBar_progressTextColor,
-                R.color.black
-            )
-
-        mProgressColor = progressBarColorID
-        mTextColor = progressTextColorID
-
-        typedArray.recycle()
-    }
-
     private fun drawOutlineArc(canvas: Canvas) {
-        val strokeWidth = 20F
-        val diameter: Float = Math.min(width, height) - strokeWidth * 2
+        val strokeWidth = 20f
+        val diameter = minOf(width, height) - strokeWidth * 2
         val outerOval = RectF(strokeWidth, strokeWidth, diameter, diameter)
 
         mPaint.apply {
