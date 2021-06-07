@@ -25,4 +25,23 @@ class MainActivity : AppCompatActivity() {
 //            setProgressColor(Color.BLUE)
         }
     }
+
+    private fun getVocabulary(): VocaListEntity {
+        return VocaListEntity().apply {
+            title = "테스트"
+            memo = "테스트 메모"
+            vocaId = 0
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            binding.fab -> {
+                CompositeDisposable().add(repo.insert(getVocabulary())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
+                )
+            }
+        }
+    }
 }
