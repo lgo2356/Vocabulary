@@ -1,29 +1,41 @@
 package com.hun.vocabulary
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hun.vocabulary.adapter.VocaListAdapter
 import com.hun.vocabulary.databinding.ActivityMainBinding
+import com.hun.vocabulary.db.entity.VocaListEntity
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var repo: Repository
+    private val vocaListAdapter = VocaListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
+        binding.apply {
+            lifecycleOwner = this@MainActivity
+            recyclerVocabularyList.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerVocabularyList.adapter = vocaListAdapter
+        }
+
+        repo = Repository(application)
     }
 
     override fun onStart() {
         super.onStart()
 
-        binding.progressLearningRate.apply {
-            setProgress(50)
-//            setProgressColor(Color.BLUE)
-        }
+        repo.getAll().observe(this, {
+            vocaListAdapter.setVocaList(it)
+        })
     }
 
     private fun getVocabulary(): VocaListEntity {
