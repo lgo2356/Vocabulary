@@ -6,19 +6,19 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.hun.vocabulary.db.dao.VocaListDao;
-import com.hun.vocabulary.db.entity.VocaListEntity;
+import com.hun.vocabulary.db.dao.VocabularyDao;
+import com.hun.vocabulary.db.entity.VocabularyEntity;
 
 @Database(
         version = 1,
         entities = {
-                VocaListEntity.class
+                VocabularyEntity.class
         },
         exportSchema = false
 )
 public abstract class DatabaseManager extends RoomDatabase {
 
-    public abstract VocaListDao vocaListDao();
+    public abstract VocabularyDao vocabularyDao();
     private static DatabaseManager INSTANCE;
 
     public static DatabaseManager getInstance(Context context) {

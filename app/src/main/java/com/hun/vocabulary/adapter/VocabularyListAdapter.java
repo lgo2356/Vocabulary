@@ -8,16 +8,16 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hun.vocabulary.R;
-import com.hun.vocabulary.db.entity.VocaListEntity;
+import com.hun.vocabulary.db.entity.VocabularyEntity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VocaListAdapter extends RecyclerView.Adapter<VocaListAdapter.ViewHolder> {
+public class VocabularyListAdapter extends RecyclerView.Adapter<VocabularyListAdapter.ViewHolder> {
 
-    private List<VocaListEntity> vocaList = new ArrayList<>();
+    private List<VocabularyEntity> vocabularyList = new ArrayList<>();
 
     @NotNull
     @Override
@@ -30,23 +30,23 @@ public class VocaListAdapter extends RecyclerView.Adapter<VocaListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int pos) {
-        VocaListEntity voca = vocaList.get(pos);
+        VocabularyEntity vocabulary = vocabularyList.get(pos);
 
-        holder.tvTitle.setText(voca.title);
-        holder.tvMemo.setText(voca.memo);
+        holder.tvTitle.setText(vocabulary.title);
+        holder.tvMemo.setText(vocabulary.memo);
     }
 
     @Override
     public int getItemCount() {
-        return vocaList.size();
+        return vocabularyList.size();
     }
 
-    public void setVocaList(List<VocaListEntity> vocaList) {
-        this.vocaList = vocaList;
+    public void setVocabularyList(List<VocabularyEntity> vocabularyList) {
+        this.vocabularyList = vocabularyList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvTitle;
         private final TextView tvMemo;

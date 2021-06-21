@@ -5,18 +5,18 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.hun.vocabulary.db.entity.VocaListEntity;
+import com.hun.vocabulary.db.entity.VocabularyEntity;
 
 import java.util.List;
 
 import io.reactivex.Completable;
 
 @Dao
-public interface VocaListDao {
+public interface VocabularyDao {
 
     @Insert
-    Completable insert(VocaListEntity vocaListEntity);
+    Completable insert(VocabularyEntity vocabularyEntity);
 
-    @Query("select * from vocaList")
-    LiveData<List<VocaListEntity>> getAll();
+    @Query("select * from vocabulary")
+    LiveData<List<VocabularyEntity>> getAll();
 }

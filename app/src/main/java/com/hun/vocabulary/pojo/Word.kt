@@ -1,7 +1,7 @@
 package com.hun.vocabulary.pojo
 
 data class Word(
-    val vocaId: Long,
+    val yomigana: String,
     val word: String,
     val meaningWord: String,
     val sentence: String,

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Vocabulary</string>
     <string name="addVocabulary">단어장 추가</string>
+    <string name="editVocabulary">단어장 편집</string>
+    <string name="addWord">단어 추가</string>
+    <string name="word">단어</string>
+    <string name="word_meaning">뜻</string>
+    <string name="sentence">예문</string>
+    <string name="sentence_meaning">예문 뜻</string>
 </resources>
